@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.14.36429.23
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WinFormsTeeChart1Net48", "WinFormsTeeChart1Net48\WinFormsTeeChart1Net48.csproj", "{22B33BC4-8F8F-4987-8BDF-A4FF269FF7C5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WinFormsTeeChart1Net48.Server", "WinFormsTeeChart1Net48.Server\WinFormsTeeChart1Net48.Server.csproj", "{19664D9C-9133-4713-A902-F7E6B9CFA7A3}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{22B33BC4-8F8F-4987-8BDF-A4FF269FF7C5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{22B33BC4-8F8F-4987-8BDF-A4FF269FF7C5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{22B33BC4-8F8F-4987-8BDF-A4FF269FF7C5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{22B33BC4-8F8F-4987-8BDF-A4FF269FF7C5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{19664D9C-9133-4713-A902-F7E6B9CFA7A3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{19664D9C-9133-4713-A902-F7E6B9CFA7A3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{19664D9C-9133-4713-A902-F7E6B9CFA7A3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{19664D9C-9133-4713-A902-F7E6B9CFA7A3}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {37EE6987-99E6-4C29-8C0E-70DDBC31B68A}
+	EndGlobalSection
+EndGlobal
