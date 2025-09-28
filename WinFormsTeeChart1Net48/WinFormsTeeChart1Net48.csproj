@@ -96,5 +96,11 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\WinFormsDevExTC1Net48.Library\WinFormsDevExTC1Net48.Library.csproj">
+      <Project>{0ec0e9d0-d4d6-4b93-a13e-a51321864de2}</Project>
+      <Name>WinFormsDevExTC1Net48.Library</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

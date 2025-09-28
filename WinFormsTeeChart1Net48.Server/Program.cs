@@ -7,15 +7,17 @@ using System.Net.Sockets;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml;
+using WinFormsDevExTC1Net48.Library;
 
 namespace WinFormsTeeChart1Net48.Server
 {
     internal class Program
     {
-        private static IPEndPoint ipEndpoint = new IPEndPoint(IPAddress.Any, 8800);
+        private static IPEndPoint ipEndpoint = new IPEndPoint(IPAddress.Any, Common.TEECHART_NET_SERVER_PORT);
         private static Socket listener;
         private static readonly Dictionary<int, TcpClient> Clients = new Dictionary<int, TcpClient>();
         private static int clientID = 1;
+        private static object objLock = new object();
 
 
 
@@ -30,13 +32,18 @@ namespace WinFormsTeeChart1Net48.Server
             while (true)
             {
                 TcpClient client = server.AcceptTcpClient();
-                currentClientID = clientID;
-                Clients.Add(currentClientID, client);
-                clientID++;
 
                 Task.Factory.StartNew(async () =>
                 {
-                    Console.WriteLine($"{DateTime.Now} [서버] [클라이언트 ID : {currentClientID}] 서비스 연결됨.");
+                    lock (objLock)
+                    {
+                        currentClientID = clientID;
+                        Clients.Add(currentClientID, client);
+                        clientID++;
+                    }
+                    
+
+                    Console.WriteLine($"{DateTime.Now} [서버][클라이언트 ID : {currentClientID}] 서비스 연결됨.");
 
                     Random rnd = new Random();
 
@@ -44,25 +51,27 @@ namespace WinFormsTeeChart1Net48.Server
                     {
                         while ((ns != null) && (ns.CanWrite))
                         {
-                            string number = rnd.Next(1000).ToString();
-                            byte[] bytesNumber = Encoding.UTF8.GetBytes(number);
+                            int number = rnd.Next(Common.TEECHART_NET_RANDOM_MAX_NUMBER);
+                            byte[] bytesNumber = Encoding.UTF8.GetBytes(number.ToString() + Common.TEECHART_NET_EOM);
 
                             try
                             {
                                 await ns.WriteAsync(bytesNumber, 0, bytesNumber.Length);
                                 await ns.FlushAsync();
-                                Console.WriteLine($"{DateTime.Now} [클라이언트 ID : {currentClientID}] {number} 송신.");
+                                Console.WriteLine($"{DateTime.Now} [서버][클라이언트 ID : {currentClientID}] {number} 송신.");
                             }
                             catch (Exception ex)
                             {
                                 Console.WriteLine($"{DateTime.Now} [서버][클라이언트 ID : {currentClientID}] 서버 오류 => {ex.Message}");
                                 break;
                             }
-
-                            await Task.Delay(1);
+                            finally
+                            {
+                                await Task.Delay(Common.TEECHART_NET_DELAY_COUNT);
+                            }
                         }
                     }
-                });                
+                });
             }
         }
     }

@@ -10,16 +10,16 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-
-using Steema.TeeChart.Styles;
+using PdfSharp.Pdf.Content.Objects;
+using WinFormsDevExTC1Net48.Library;
 
 namespace WinFormsTeeChart1Net48
 {
     public partial class Form1 : Form
     {
-        private TcpClient client1 = null;
-        private TcpClient client2 = null;
-        private TcpClient client3 = null;
+        private Socket skClient1 = null;
+        private Socket skClient2 = null;
+        private Socket skClient3 = null;
 
 
 
@@ -52,37 +52,52 @@ namespace WinFormsTeeChart1Net48
             btnConnectSession1.Enabled = false;
             btnDisconnectSession1.Enabled = true;
 
-            client1 = new TcpClient();
-            await client1.ConnectAsync("127.0.0.1", 8800);
-
+            skClient1 = new Socket(AddressFamily.InterNetwork,SocketType.Stream, ProtocolType.Tcp);
+            await skClient1.ConnectAsync(Common.TEECHART_NET_SERVER_IP, Common.TEECHART_NET_SERVER_PORT);
+            
             lblMessageSession1.Text = "연결됨";
 
-            using (NetworkStream ns = client1.GetStream())
+            await Task.Factory.StartNew((async () =>
             {
-                while ((client1 != null) && (ns != null))
+                while ((this.skClient1 != null) && (this.skClient1.Connected))
                 {
-                    try
-                    {
-                        byte[] buffer = new byte[4];
-                        int bytesRead = await ns.ReadAsync(buffer, 0, buffer.Length);
-                        int i = int.Parse(Encoding.UTF8.GetString(buffer, 0, bytesRead));
+                    string msg = "";
 
-                        tChart1[0].Add(i);
-                        tChart1.Page.Next();
-                        lblDataSession1.Text = i.ToString();
+                    while (msg.IndexOf(Common.TEECHART_NET_EOM) <= -1)
+                    {
+                        byte[] buffer = new byte[Common.TEECHART_NET_BUFFER_SIZE];
+                        int bytesRead = await skClient1.ReceiveAsync(new ArraySegment<byte>(buffer), SocketFlags.None);
+                        msg = msg + Encoding.UTF8.GetString(buffer, 0, bytesRead);
                     }
-                    catch (Exception) { }
+                    
+                    string[] strNumbers = msg.Split(new string[1] { Common.TEECHART_NET_EOM }, StringSplitOptions.RemoveEmptyEntries);
+                    int[] numbers = new int[strNumbers.Length];
+
+                    for (int i = 0; i < strNumbers.Length; i++)
+                    {
+                        numbers[i] = int.Parse(strNumbers[i]);
+                    }
+
+                    Invoke(new Action(() =>
+                    {
+                        foreach (int i in numbers)
+                        {
+                            tChart1[0].Add(i);
+                            tChart1.Page.Next();
+                            lblDataSession1.Text = i.ToString();
+                        }
+                    }));
                 }
-            }
+            }));
         }
 
         private void btnDisconnectSession1_Click(object sender, EventArgs e)
         {
-            if (client1 != null)
+            if (skClient1 != null)
             {
-                client1.Close();
-                client1.Dispose();
-                client1 = null;
+                skClient1.Disconnect(false);
+                skClient1.Dispose();
+                skClient1 = null;
             }
             
             btnConnectSession1.Enabled = true;
@@ -95,37 +110,52 @@ namespace WinFormsTeeChart1Net48
             btnConnectSession2.Enabled = false;
             btnDisconnectSession2.Enabled = true;
 
-            client2 = new TcpClient();
-            await client2.ConnectAsync("127.0.0.1", 8800);
+            skClient2 = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+            await skClient2.ConnectAsync(Common.TEECHART_NET_SERVER_IP, Common.TEECHART_NET_SERVER_PORT);
 
             lblMessageSession2.Text = "연결됨";
 
-            using (NetworkStream ns = client2.GetStream())
+            await Task.Factory.StartNew((async () =>
             {
-                while ((client2 != null) && (ns != null))
+                while ((this.skClient2 != null) && (this.skClient2.Connected))
                 {
-                    try
-                    {
-                        byte[] buffer = new byte[4];
-                        int bytesRead = await ns.ReadAsync(buffer, 0, buffer.Length);
-                        int i = int.Parse(Encoding.UTF8.GetString(buffer, 0, bytesRead));
+                    string msg = "";
 
-                        tChart1[1].Add(i);
-                        tChart1.Page.Next();
-                        lblDataSession2.Text = i.ToString();
+                    while (msg.IndexOf(Common.TEECHART_NET_EOM) <= -1)
+                    {
+                        byte[] buffer = new byte[Common.TEECHART_NET_BUFFER_SIZE];
+                        int bytesRead = await skClient2.ReceiveAsync(new ArraySegment<byte>(buffer), SocketFlags.None);
+                        msg = msg + Encoding.UTF8.GetString(buffer, 0, bytesRead);
                     }
-                    catch (Exception) { }
+
+                    string[] strNumbers = msg.Split(new string[1] { Common.TEECHART_NET_EOM }, StringSplitOptions.RemoveEmptyEntries);
+                    int[] numbers = new int[strNumbers.Length];
+
+                    for (int i = 0; i < strNumbers.Length; i++)
+                    {
+                        numbers[i] = int.Parse(strNumbers[i]);
+                    }
+
+                    Invoke(new Action(() =>
+                    {
+                        foreach (int i in numbers)
+                        {
+                            tChart1[1].Add(i);
+                            tChart1.Page.Next();
+                            lblDataSession2.Text = i.ToString();
+                        }
+                    }));
                 }
-            }
+            }));
         }
 
         private void btnDisconnectSession2_Click(object sender, EventArgs e)
         {
-            if (client2 != null)
+            if (skClient2 != null)
             {
-                client2.Close();
-                client2.Dispose();
-                client2 = null;
+                skClient2.Disconnect(false);
+                skClient2.Dispose();
+                skClient2 = null;
             }
 
             btnConnectSession2.Enabled = true;
@@ -138,37 +168,52 @@ namespace WinFormsTeeChart1Net48
             btnConnectSession3.Enabled = false;
             btnDisconnectSession3.Enabled = true;
 
-            client3 = new TcpClient();
-            await client3.ConnectAsync("127.0.0.1", 8800);
+            skClient3 = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+            await skClient3.ConnectAsync(Common.TEECHART_NET_SERVER_IP, Common.TEECHART_NET_SERVER_PORT);
 
             lblMessageSession3.Text = "연결됨";
 
-            using (NetworkStream ns = client3.GetStream())
+            await Task.Factory.StartNew((async () =>
             {
-                while ((client3 != null) && (ns != null))
+                while ((this.skClient3 != null) && (this.skClient3.Connected))
                 {
-                    try
-                    {
-                        byte[] buffer = new byte[4];
-                        int bytesRead = await ns.ReadAsync(buffer, 0, buffer.Length);
-                        int i = int.Parse(Encoding.UTF8.GetString(buffer, 0, bytesRead));
+                    string msg = "";
 
-                        tChart1[2].Add(i);
-                        tChart1.Page.Next();
-                        lblDataSession3.Text = i.ToString();
+                    while (msg.IndexOf(Common.TEECHART_NET_EOM) <= -1)
+                    {
+                        byte[] buffer = new byte[Common.TEECHART_NET_BUFFER_SIZE];
+                        int bytesRead = await skClient3.ReceiveAsync(new ArraySegment<byte>(buffer), SocketFlags.None);
+                        msg = msg + Encoding.UTF8.GetString(buffer, 0, bytesRead);
                     }
-                    catch (Exception) { }
+
+                    string[] strNumbers = msg.Split(new string[1] { Common.TEECHART_NET_EOM }, StringSplitOptions.RemoveEmptyEntries);
+                    int[] numbers = new int[strNumbers.Length];
+
+                    for (int i = 0; i < strNumbers.Length; i++)
+                    {
+                        numbers[i] = int.Parse(strNumbers[i]);
+                    }
+
+                    Invoke(new Action(() =>
+                    {
+                        foreach (int i in numbers)
+                        {
+                            tChart1[2].Add(i);
+                            tChart1.Page.Next();
+                            lblDataSession3.Text = i.ToString();
+                        }
+                    }));
                 }
-            }
+            }));
         }
 
         private void btnDisconnectSession3_Click(object sender, EventArgs e)
         {
-            if (client3 != null)
+            if (skClient3 != null)
             {
-                client3.Close();
-                client3.Dispose();
-                client3 = null;
+                skClient3.Disconnect(false);
+                skClient3.Dispose();
+                skClient3 = null;
             }
 
             btnConnectSession3.Enabled = true;
