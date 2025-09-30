@@ -72,6 +72,12 @@ namespace WinFormsTeeChart1Net48.Server
                             }
                         }
                     }
+
+                    Clients[currentClientID].Close();
+                    Clients[currentClientID].Dispose();
+                    Clients.Remove(currentClientID);
+
+                    Console.WriteLine($"{DateTime.Now} [서버][클라이언트 ID : {currentClientID}] 서비스 연결이 종료되었습니다.");
                 });
             }
         }
