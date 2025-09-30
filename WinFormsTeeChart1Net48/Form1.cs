@@ -10,7 +10,7 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using PdfSharp.Pdf.Content.Objects;
+
 using WinFormsDevExTC1Net48.Library;
 
 namespace WinFormsTeeChart1Net48
@@ -33,6 +33,10 @@ namespace WinFormsTeeChart1Net48
         private void Form1_Load(object sender, EventArgs e)
         {
             this.FormClosing += Form1_FormClosing;
+
+            btnDisconnectSession1.Enabled = false;
+            btnDisconnectSession2.Enabled = false;
+            btnDisconnectSession3.Enabled = false;
         }
 
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
@@ -49,12 +53,11 @@ namespace WinFormsTeeChart1Net48
 
         private async void btnConnectSession1_Click(object sender, EventArgs e)
         {
-            btnConnectSession1.Enabled = false;
-            btnDisconnectSession1.Enabled = true;
-
             skClient1 = new Socket(AddressFamily.InterNetwork,SocketType.Stream, ProtocolType.Tcp);
             await skClient1.ConnectAsync(Common.TEECHART_NET_SERVER_IP, Common.TEECHART_NET_SERVER_PORT);
-            
+
+            btnConnectSession1.Enabled = false;
+            btnDisconnectSession1.Enabled = true;
             lblMessageSession1.Text = "연결됨";
 
             await Task.Factory.StartNew((async () =>
@@ -107,12 +110,11 @@ namespace WinFormsTeeChart1Net48
 
         private async void btnConnectSession2_Click(object sender, EventArgs e)
         {
-            btnConnectSession2.Enabled = false;
-            btnDisconnectSession2.Enabled = true;
-
             skClient2 = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
             await skClient2.ConnectAsync(Common.TEECHART_NET_SERVER_IP, Common.TEECHART_NET_SERVER_PORT);
 
+            btnConnectSession2.Enabled = false;
+            btnDisconnectSession2.Enabled = true;
             lblMessageSession2.Text = "연결됨";
 
             await Task.Factory.StartNew((async () =>
@@ -165,12 +167,11 @@ namespace WinFormsTeeChart1Net48
 
         private async void btnConnectSession3_Click(object sender, EventArgs e)
         {
-            btnConnectSession3.Enabled = false;
-            btnDisconnectSession3.Enabled = true;
-
             skClient3 = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
             await skClient3.ConnectAsync(Common.TEECHART_NET_SERVER_IP, Common.TEECHART_NET_SERVER_PORT);
 
+            btnConnectSession3.Enabled = false;
+            btnDisconnectSession3.Enabled = true;
             lblMessageSession3.Text = "연결됨";
 
             await Task.Factory.StartNew((async () =>

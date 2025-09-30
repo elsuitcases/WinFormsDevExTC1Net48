@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            Steema.TeeChart.Margins margins2 = new Steema.TeeChart.Margins();
+            Steema.TeeChart.Margins margins1 = new Steema.TeeChart.Margins();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.groupBoxSession1 = new System.Windows.Forms.GroupBox();
             this.lblDataSession1 = new System.Windows.Forms.Label();
@@ -66,7 +66,7 @@
             this.groupBoxSession1.Controls.Add(this.btnConnectSession1);
             this.groupBoxSession1.Location = new System.Drawing.Point(629, 78);
             this.groupBoxSession1.Name = "groupBoxSession1";
-            this.groupBoxSession1.Size = new System.Drawing.Size(367, 100);
+            this.groupBoxSession1.Size = new System.Drawing.Size(367, 140);
             this.groupBoxSession1.TabIndex = 1;
             this.groupBoxSession1.TabStop = false;
             this.groupBoxSession1.Text = "세션 #1";
@@ -124,7 +124,7 @@
             this.groupBoxSession2.Controls.Add(this.btnConnectSession2);
             this.groupBoxSession2.Location = new System.Drawing.Point(629, 195);
             this.groupBoxSession2.Name = "groupBoxSession2";
-            this.groupBoxSession2.Size = new System.Drawing.Size(367, 100);
+            this.groupBoxSession2.Size = new System.Drawing.Size(367, 140);
             this.groupBoxSession2.TabIndex = 2;
             this.groupBoxSession2.TabStop = false;
             this.groupBoxSession2.Text = "세션 #2";
@@ -156,7 +156,7 @@
             this.btnDisconnectSession2.Location = new System.Drawing.Point(87, 20);
             this.btnDisconnectSession2.Name = "btnDisconnectSession2";
             this.btnDisconnectSession2.Size = new System.Drawing.Size(75, 25);
-            this.btnDisconnectSession2.TabIndex = 1;
+            this.btnDisconnectSession2.TabIndex = 3;
             this.btnDisconnectSession2.Text = "세션 종료";
             this.btnDisconnectSession2.UseVisualStyleBackColor = true;
             this.btnDisconnectSession2.Click += new System.EventHandler(this.btnDisconnectSession2_Click);
@@ -167,7 +167,7 @@
             this.btnConnectSession2.Location = new System.Drawing.Point(6, 20);
             this.btnConnectSession2.Name = "btnConnectSession2";
             this.btnConnectSession2.Size = new System.Drawing.Size(75, 25);
-            this.btnConnectSession2.TabIndex = 0;
+            this.btnConnectSession2.TabIndex = 2;
             this.btnConnectSession2.Text = "세션 연결";
             this.btnConnectSession2.UseVisualStyleBackColor = true;
             this.btnConnectSession2.Click += new System.EventHandler(this.btnConnectSession2_Click);
@@ -182,7 +182,7 @@
             this.groupBoxSession3.Controls.Add(this.btnConnectSession3);
             this.groupBoxSession3.Location = new System.Drawing.Point(629, 313);
             this.groupBoxSession3.Name = "groupBoxSession3";
-            this.groupBoxSession3.Size = new System.Drawing.Size(367, 100);
+            this.groupBoxSession3.Size = new System.Drawing.Size(367, 140);
             this.groupBoxSession3.TabIndex = 3;
             this.groupBoxSession3.TabStop = false;
             this.groupBoxSession3.Text = "세션 #3";
@@ -214,7 +214,7 @@
             this.btnDisconnectSession3.Location = new System.Drawing.Point(87, 20);
             this.btnDisconnectSession3.Name = "btnDisconnectSession3";
             this.btnDisconnectSession3.Size = new System.Drawing.Size(75, 25);
-            this.btnDisconnectSession3.TabIndex = 1;
+            this.btnDisconnectSession3.TabIndex = 5;
             this.btnDisconnectSession3.Text = "세션 종료";
             this.btnDisconnectSession3.UseVisualStyleBackColor = true;
             this.btnDisconnectSession3.Click += new System.EventHandler(this.btnDisconnectSession3_Click);
@@ -225,7 +225,7 @@
             this.btnConnectSession3.Location = new System.Drawing.Point(6, 20);
             this.btnConnectSession3.Name = "btnConnectSession3";
             this.btnConnectSession3.Size = new System.Drawing.Size(75, 25);
-            this.btnConnectSession3.TabIndex = 0;
+            this.btnConnectSession3.TabIndex = 4;
             this.btnConnectSession3.Text = "세션 연결";
             this.btnConnectSession3.UseVisualStyleBackColor = true;
             this.btnConnectSession3.Click += new System.EventHandler(this.btnConnectSession3_Click);
@@ -1004,15 +1004,15 @@
             // 
             // 
             // 
-            margins2.Bottom = 100;
-            margins2.Left = 100;
-            margins2.Right = 100;
-            margins2.Top = 100;
-            this.tChart1.Printer.Margins = margins2;
+            margins1.Bottom = 100;
+            margins1.Left = 100;
+            margins1.Right = 100;
+            margins1.Top = 100;
+            this.tChart1.Printer.Margins = margins1;
             this.tChart1.Series.Add(this.fastLine1);
             this.tChart1.Series.Add(this.fastLine2);
             this.tChart1.Series.Add(this.fastLine3);
-            this.tChart1.Size = new System.Drawing.Size(600, 471);
+            this.tChart1.Size = new System.Drawing.Size(600, 511);
             // 
             // 
             // 
@@ -1733,12 +1733,13 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1008, 561);
+            this.ClientSize = new System.Drawing.Size(1008, 601);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.tChart1);
             this.Controls.Add(this.groupBoxSession3);
             this.Controls.Add(this.groupBoxSession2);
             this.Controls.Add(this.groupBoxSession1);
+            this.MinimumSize = new System.Drawing.Size(1024, 640);
             this.Name = "Form1";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Form1";
