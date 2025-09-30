@@ -53,8 +53,11 @@ namespace WinFormsTeeChart1Net48
 
         private async void btnConnectSession1_Click(object sender, EventArgs e)
         {
-            skClient1 = new Socket(AddressFamily.InterNetwork,SocketType.Stream, ProtocolType.Tcp);
-            await skClient1.ConnectAsync(Common.TEECHART_NET_SERVER_IP, Common.TEECHART_NET_SERVER_PORT);
+            skClient1 = new Socket(AddressFamily.InterNetwork, 
+                                   SocketType.Stream, 
+                                   ProtocolType.Tcp);
+            await skClient1.ConnectAsync(Common.TEECHART_NET_SERVER_IP, 
+                                         Common.TEECHART_NET_SERVER_PORT);
 
             btnConnectSession1.Enabled = false;
             btnDisconnectSession1.Enabled = true;
@@ -110,8 +113,11 @@ namespace WinFormsTeeChart1Net48
 
         private async void btnConnectSession2_Click(object sender, EventArgs e)
         {
-            skClient2 = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
-            await skClient2.ConnectAsync(Common.TEECHART_NET_SERVER_IP, Common.TEECHART_NET_SERVER_PORT);
+            skClient2 = new Socket(AddressFamily.InterNetwork,
+                                   SocketType.Stream,
+                                   ProtocolType.Tcp);
+            await skClient2.ConnectAsync(Common.TEECHART_NET_SERVER_IP,
+                                         Common.TEECHART_NET_SERVER_PORT);
 
             btnConnectSession2.Enabled = false;
             btnDisconnectSession2.Enabled = true;
@@ -167,8 +173,11 @@ namespace WinFormsTeeChart1Net48
 
         private async void btnConnectSession3_Click(object sender, EventArgs e)
         {
-            skClient3 = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
-            await skClient3.ConnectAsync(Common.TEECHART_NET_SERVER_IP, Common.TEECHART_NET_SERVER_PORT);
+            skClient3 = new Socket(AddressFamily.InterNetwork,
+                                   SocketType.Stream,
+                                   ProtocolType.Tcp);
+            await skClient3.ConnectAsync(Common.TEECHART_NET_SERVER_IP,
+                                         Common.TEECHART_NET_SERVER_PORT);
 
             btnConnectSession3.Enabled = false;
             btnDisconnectSession3.Enabled = true;

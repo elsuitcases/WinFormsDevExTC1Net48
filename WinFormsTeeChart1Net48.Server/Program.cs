@@ -25,7 +25,6 @@ namespace WinFormsTeeChart1Net48.Server
         public static void Main(string[] args)
         {
             TcpListener server = new TcpListener(ipEndpoint);
-            int currentClientID = -1;
 
             server.Start();
             Console.WriteLine($"{DateTime.Now} [서버] TCP 서비스가 시작되었습니다. 클라이언트를 대기 중 ...");
@@ -36,13 +35,14 @@ namespace WinFormsTeeChart1Net48.Server
 
                 Task.Factory.StartNew(async () =>
                 {
+                    int currentClientID = -1;
                     lock (objLock)
                     {
                         currentClientID = clientID;
                         Clients.Add(currentClientID, client);
                         clientID++;
                     }
-                    
+
 
                     Console.WriteLine($"{DateTime.Now} [서버][클라이언트 ID : {currentClientID}] 서비스 연결됨.");
 
